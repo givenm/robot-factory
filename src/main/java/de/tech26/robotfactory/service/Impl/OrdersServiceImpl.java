@@ -1,7 +1,7 @@
 package de.tech26.robotfactory.service.Impl;
 
-import de.tech26.robotfactory.pojos.requests.CreateOrderRequest;
-import de.tech26.robotfactory.pojos.responses.CreateOrderResponse;
+import de.tech26.robotfactory.dto.requests.CreateOrderRequest;
+import de.tech26.robotfactory.dto.responses.CreateOrderResponse;
 import de.tech26.robotfactory.service.OrdersService;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;

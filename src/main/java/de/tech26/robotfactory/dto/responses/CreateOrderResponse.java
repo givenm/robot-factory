@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.pojos.responses;
+package de.tech26.robotfactory.dto.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

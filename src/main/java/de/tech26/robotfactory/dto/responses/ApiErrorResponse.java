@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.tech26.robotfactory.pojos.responses;
+package de.tech26.robotfactory.dto.responses;
 import de.tech26.robotfactory.enums.ErrorCodesEnum;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

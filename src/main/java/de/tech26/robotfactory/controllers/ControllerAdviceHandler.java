@@ -7,12 +7,13 @@ package de.tech26.robotfactory.controllers;
 
 import de.tech26.robotfactory.enums.ErrorCodesEnum;
 import de.tech26.robotfactory.exceptions.GlobalRuntimeException;
-import de.tech26.robotfactory.pojos.responses.ApiErrorResponse;
+import de.tech26.robotfactory.dto.responses.ApiErrorResponse;
 import de.tech26.robotfactory.utils.RestUtil;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,8 +42,12 @@ public class ControllerAdviceHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, @NotNull HttpHeaders headers, @NotNull HttpStatus status, @NotNull WebRequest request) {
         // Capture API validation errors and format them nicely
         final List<String> errors = new LinkedList<>();
-        ex.getBindingResult().getGlobalErrors().forEach((error) -> errors.add(error.getDefaultMessage()));
-        ex.getBindingResult().getFieldErrors().forEach((error) -> errors.add(error.getDefaultMessage()));
+        ex.getBindingResult().getAllErrors()
+                .forEach((error) -> {
+                    String fieldName = ((FieldError) error).getField();
+                    String errorMessage = error.getDefaultMessage();
+                    errors.add(String.format("%s: %s", fieldName, errorMessage));
+                });
         Object apiErrorResponse = new ApiErrorResponse(ErrorCodesEnum.REQUIRED_FIELD_INVALID, errors);
         return RestUtil.toResponseEntity(apiErrorResponse, HttpStatus.valueOf(ErrorCodesEnum.REQUIRED_FIELD_INVALID.getHttpStatusCode()));
     }
