@@ -7,6 +7,10 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * Some form of DB storage. In memory for simulation of data and to demonstrate Java generics only but
+ * a real database, externally, is a must so that the app can be scaled horizontally
+ * **/
 public abstract class Database<R, T> {
 
     public void save(@NotNull T entity) {

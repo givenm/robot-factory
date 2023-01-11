@@ -30,7 +30,9 @@ public class ProductsController {
 
     @GetMapping
     public ResponseEntity<GetProductsResponse> getProductProducts(){
-        //Can be paginated for better performance. I didn't build the capability in the InMemoryDb
+        //Could be added:
+        //1. Can be paginated for better performance.
+        //2. Filtering the products by product type can help client with paginating on specific product grouping for better product listing selection
         return RestUtil.toResponseEntity(productsService.getAllProducts(), HttpStatus.OK);
     }
 }

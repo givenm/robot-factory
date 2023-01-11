@@ -9,12 +9,15 @@ public class GetProductResponse {
     private BigDecimal price;
     private Long quantity;
     private String name;
+    private String type;
 
     public GetProductResponse(Product product) {
         this.id = product.getId();
         this.price = product.getPrice();
         this.quantity = product.getQuantity();
         this.name = product.getName();
+        this.name = product.getName();
+        this.type = product.getType();
     }
 
     public String getId() {
@@ -47,5 +50,13 @@ public class GetProductResponse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

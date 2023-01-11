@@ -10,12 +10,14 @@ public class Product {
     private BigDecimal price;
     private Long quantity;
     private String name;
+    private String type;
 
-    public Product(String id, BigDecimal price, Long quantity, String name) {
+    public Product(String id, BigDecimal price, Long quantity, String name, String type) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;
         this.name = name;
+        this.type = type;
     }
 
     public String getId() {
@@ -48,5 +50,13 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
