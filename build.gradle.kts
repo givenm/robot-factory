@@ -9,7 +9,7 @@ plugins {
 
 group = "de.tech26.robotfactory"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+//java.sourceCompatibility = JavaVersion.VERSION_11 #This line was causing an error: "invalid source release: 11"
 
 repositories {
     mavenCentral()
