@@ -3,7 +3,7 @@ package de.tech26.robotfactory.controllers;
 import de.tech26.robotfactory.dto.requests.CreateOrderRequest;
 import de.tech26.robotfactory.dto.responses.CreateOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetOrderResponse;
-import de.tech26.robotfactory.dto.responses.GetProductsResponse;
+import de.tech26.robotfactory.dto.responses.GetOrdersResponse;
 import de.tech26.robotfactory.service.OrdersService;
 import de.tech26.robotfactory.utils.RestUtil;
 import org.springframework.http.HttpStatus;
@@ -37,5 +37,13 @@ public class OrdersController {
         return RestUtil.toResponseEntity(ordersService.getProduct(id), HttpStatus.OK);
     }
 
-    //We could add get orders, cancel and update order
+    @GetMapping
+    public ResponseEntity<GetOrdersResponse> getProductProducts(){
+        //Could be added:
+        //1. Pagination for better performance.
+        //2. Filters
+        return RestUtil.toResponseEntity(ordersService.getAllOrders(), HttpStatus.OK);
+    }
+
+    //We could add cancel and update order
 }

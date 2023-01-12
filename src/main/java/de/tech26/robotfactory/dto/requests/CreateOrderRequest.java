@@ -9,7 +9,7 @@ public class CreateOrderRequest {
 
     @NotNull(message = "Please provide product type for your order")
     private ProductGroupEnum productType;
-    @Size(min = 4, max = 4, message = "Your order must have 4 components; containing one, and only one, part of face, material, arms and mobility")
+    @Size(min = 1, message = "Your order must have a minimum of 1 component")
     private List<String> components;
 
     public List<String> getComponents() {

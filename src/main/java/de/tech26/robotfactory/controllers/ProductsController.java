@@ -1,6 +1,4 @@
 package de.tech26.robotfactory.controllers;
-import de.tech26.robotfactory.dto.requests.CreateOrderRequest;
-import de.tech26.robotfactory.dto.responses.CreateOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetProductResponse;
 import de.tech26.robotfactory.dto.responses.GetProductsResponse;
 import de.tech26.robotfactory.service.ProductsService;
@@ -31,8 +29,8 @@ public class ProductsController {
     @GetMapping
     public ResponseEntity<GetProductsResponse> getProductProducts(){
         //Could be added:
-        //1. Can be paginated for better performance.
-        //2. Filtering the products by product type can help client with paginating on specific product grouping for better product listing selection
+        //1. Pagination for better performance.
+        //2. Filtering the products by product type can help client with paginating on specific product grouping for easier product listing selection
         return RestUtil.toResponseEntity(productsService.getAllProducts(), HttpStatus.OK);
     }
 }

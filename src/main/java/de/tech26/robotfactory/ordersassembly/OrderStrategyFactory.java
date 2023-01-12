@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.orderassembly;
+package de.tech26.robotfactory.ordersassembly;
 
 import de.tech26.robotfactory.enums.ProductGroupEnum;
 import org.springframework.stereotype.Component;

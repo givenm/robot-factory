@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.orderassembly.robot;
+package de.tech26.robotfactory.ordersassembly.robot;
 
 import de.tech26.robotfactory.enums.ErrorCodesEnum;
 import de.tech26.robotfactory.enums.RobotPartType;
@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class RobotAssembly {
+class RobotAssembly {
     protected String orderId;
     protected BigDecimal total;
 
@@ -32,7 +32,7 @@ public class RobotAssembly {
     }
 
     public static class Builder {
-        private String customerId;
+        private final String customerId;
         private Product face;
         private Product arms;
         private Product mobility;

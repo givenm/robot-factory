@@ -1,11 +1,11 @@
-package de.tech26.robotfactory.orderassembly.robot;
+package de.tech26.robotfactory.ordersassembly.robot;
 
 import de.tech26.robotfactory.dto.AssembledOrder;
 import de.tech26.robotfactory.dto.requests.CreateOrderRequest;
 import de.tech26.robotfactory.enums.ProductGroupEnum;
 import de.tech26.robotfactory.model.Order;
 import de.tech26.robotfactory.model.Product;
-import de.tech26.robotfactory.orderassembly.OrderStrategy;
+import de.tech26.robotfactory.ordersassembly.OrderStrategy;
 import de.tech26.robotfactory.repository.ProductsRepository;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class RobotOrderStrategy implements OrderStrategy {
+class RobotOrderStrategy implements OrderStrategy {
     private final ProductsRepository productsRepository;
 
     public RobotOrderStrategy(ProductsRepository productsRepository) {
@@ -39,7 +39,6 @@ public class RobotOrderStrategy implements OrderStrategy {
         Order order = new RobotAssembly.Builder(customerId)
                 .withComponents(productsForAssembly)
                 .build();
-        //Asynchronously send email to customer for the successful order. Could be delegated to emails microservice
         return new AssembledOrder(order, productsForAssembly);
     }
 
