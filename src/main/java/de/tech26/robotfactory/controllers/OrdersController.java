@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping(path = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class OrdersController {
 
     private final OrdersService ordersService;
@@ -24,9 +24,9 @@ public class OrdersController {
         this.ordersService = ordersService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<CreateOrderResponse> createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) {
-        //we get authenticated customer from Principal object as it's passed down.
+        // We get authenticated customer from Principal object as it's passed down.
         // Since we don't have spring security, we will generate a new one instead, for demonstration
         String customerId = UUID.randomUUID().toString();
         return RestUtil.toResponseEntity(ordersService.createOrder(createOrderRequest, customerId), HttpStatus.CREATED);

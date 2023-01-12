@@ -30,6 +30,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest, String customerId) {
 
+        //Makes this
         if (createOrderRequest.getProductType() == ProductGroupEnum.ROBOT) {
             //1. Query with specific product Ids against external DB is a must. findAll for demonstration only
             //2. We can utilize transactions with select for update to lock the products when reading to make sure that stock
