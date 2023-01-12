@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.productassembly;
+package de.tech26.robotfactory.orderassembly.robot;
 
 import de.tech26.robotfactory.enums.ErrorCodesEnum;
 import de.tech26.robotfactory.enums.RobotPartType;

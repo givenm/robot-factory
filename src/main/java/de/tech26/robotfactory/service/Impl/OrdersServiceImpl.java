@@ -1,5 +1,6 @@
 package de.tech26.robotfactory.service.Impl;
 
+import de.tech26.robotfactory.dto.AssembledOrder;
 import de.tech26.robotfactory.dto.requests.CreateOrderRequest;
 import de.tech26.robotfactory.dto.responses.CreateOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetOrderResponse;
@@ -8,48 +9,38 @@ import de.tech26.robotfactory.enums.ProductGroupEnum;
 import de.tech26.robotfactory.exceptions.GlobalRuntimeException;
 import de.tech26.robotfactory.model.Order;
 import de.tech26.robotfactory.model.Product;
-import de.tech26.robotfactory.productassembly.RobotAssembly;
+import de.tech26.robotfactory.orderassembly.OrderStrategyFactory;
 import de.tech26.robotfactory.repository.OrdersRepository;
 import de.tech26.robotfactory.repository.ProductsRepository;
 import de.tech26.robotfactory.service.OrdersService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
     private final ProductsRepository productsRepository;
     private final OrdersRepository ordersRepository;
+    private final OrderStrategyFactory orderStrategyFactory;
 
-    public OrdersServiceImpl(ProductsRepository productsRepository, OrdersRepository ordersRepository) {
+    public OrdersServiceImpl(ProductsRepository productsRepository, OrdersRepository ordersRepository, OrderStrategyFactory orderStrategyFactory) {
         this.productsRepository = productsRepository;
         this.ordersRepository = ordersRepository;
+        this.orderStrategyFactory = orderStrategyFactory;
     }
 
     @Override
     public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest, String customerId) {
-
-        //Makes this
-        if (createOrderRequest.getProductType() == ProductGroupEnum.ROBOT) {
-            //1. Query with specific product Ids against external DB is a must. findAll for demonstration only
-            //2. We can utilize transactions with select for update to lock the products when reading to make sure that stock
-            // is represented accurately but create order process should have a very short timeout.
-            List<Product> productsForAssembly = productsRepository
-                    .findAll(Product.class)
-                    .stream()
-                    .filter(product -> product.getProductGroup() == ProductGroupEnum.ROBOT && createOrderRequest.getComponents().contains(product.getId()))
-                    .collect(Collectors.toList());
-
-            Order order = new RobotAssembly.Builder(customerId)
-                    .withComponents(productsForAssembly)
-                    .build();
-            //Note: Arms come in pairs on robot orders. So quantity 1, comes with left and right.
-            saveOrderAndUpdateStock(order, productsForAssembly);
-            //Asynchronously send email to customer for the successful order. Could be delegated to emails microservice
-            return new CreateOrderResponse(order.getId(), order.getTotal());
-        }
-        throw new GlobalRuntimeException(ErrorCodesEnum.UNKNOWN_PRODUCT);
+        //With the strategy pattern used and when we add a new product, we don't have to update anything here
+        //We just create a new implementation of fulfilling the order by just creating a new concrete class
+        //that extends OrderStrategy and writes its implementation like done in RobotOrderStrategy.
+        //This will work well if the API will not change much or get blotted with optional variables to accommodate many kinds of products assembly different to robots.
+        AssembledOrder assembledOrder = orderStrategyFactory
+                .findOrderStrategy(createOrderRequest.getProductType())
+                .orElseThrow(() -> new GlobalRuntimeException(ErrorCodesEnum.UNKNOWN_PRODUCT))
+                .createOrder(createOrderRequest, customerId);
+        saveOrderAndUpdateStock(assembledOrder.getOrder(), assembledOrder.getProductsUsed());
+        return new CreateOrderResponse(assembledOrder.getOrder().getId(), assembledOrder.getOrder().getTotal());
     }
 
     private void saveOrderAndUpdateStock(Order order, List<Product> productsForAssembly) {
