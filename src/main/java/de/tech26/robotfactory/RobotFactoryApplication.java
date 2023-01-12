@@ -1,7 +1,8 @@
 package de.tech26.robotfactory;
 
-import de.tech26.robotfactory.model.Product;
-import de.tech26.robotfactory.repository.OrdersRepository;
+import de.tech26.robotfactory.enums.ProductGroupEnum;
+import de.tech26.robotfactory.enums.RobotPartType;
+import de.tech26.robotfactory.model.ProductBuilder;
 import de.tech26.robotfactory.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,15 +26,15 @@ public class RobotFactoryApplication implements CommandLineRunner {
     // Prod can use other means like flyway or liquibase
     @Override
     public void run(String args[]) {
-        productsRepository.saveProduct(new Product("A", new BigDecimal("10.28"), 9L, "Humanoid Face", "Face"));
-        productsRepository.saveProduct(new Product("B", new BigDecimal("24.07"), 7L, "LCD Face", "Face"));
-        productsRepository.saveProduct(new Product("C", new BigDecimal("13.30"), 0L, "Steampunk Face", "Face"));
-        productsRepository.saveProduct(new Product("D", new BigDecimal("28.94"), 1L, "Arms with Hands", "Arms"));
-        productsRepository.saveProduct(new Product("E", new BigDecimal("12.39"), 3L, "Arms with Grippers", "Arms"));
-        productsRepository.saveProduct(new Product("F", new BigDecimal("30.77"), 2L, "Mobility with Wheels", "Mobility"));
-        productsRepository.saveProduct(new Product("G", new BigDecimal("55.13"), 15L, "Mobility with Legs", "Mobility"));
-        productsRepository.saveProduct(new Product("H", new BigDecimal("50.00"), 7L, "Mobility with Tracks", "Mobility"));
-        productsRepository.saveProduct(new Product("I", new BigDecimal("90.12"), 92L, "Material Bioplastic", "Material"));
-        productsRepository.saveProduct(new Product("J", new BigDecimal("82.31"), 15L, "Material Metallic", "Material"));
+        productsRepository.save(new ProductBuilder().withId("A").withPrice(new BigDecimal("10.28")).withQuantity(9L).withName("Humanoid Face").withType(RobotPartType.FACE.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("B").withPrice(new BigDecimal("24.07")).withQuantity(7L).withName("LCD Face").withType(RobotPartType.FACE.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("C").withPrice(new BigDecimal("13.30")).withQuantity(0L).withName("Steampunk Face").withType(RobotPartType.FACE.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("D").withPrice(new BigDecimal("28.94")).withQuantity(1L).withName("Arms with Hands").withType(RobotPartType.ARMS.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("E").withPrice(new BigDecimal("12.39")).withQuantity(3L).withName("Arms with Grippers").withType(RobotPartType.ARMS.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("F").withPrice(new BigDecimal("30.77")).withQuantity(2L).withName("Mobility with Wheels").withType(RobotPartType.MOBILITY.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("G").withPrice(new BigDecimal("55.13")).withQuantity(15L).withName("Mobility with Legs").withType(RobotPartType.MOBILITY.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("H").withPrice(new BigDecimal("50.00")).withQuantity(7L).withName("Mobility with Tracks").withType(RobotPartType.MOBILITY.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("I").withPrice(new BigDecimal("90.12")).withQuantity(92L).withName("Material Bioplastic").withType(RobotPartType.MATERIAL.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
+        productsRepository.save(new ProductBuilder().withId("J").withPrice(new BigDecimal("82.31")).withQuantity(15L).withName("Material Metallic").withType(RobotPartType.MATERIAL.name()).withProductGroup(ProductGroupEnum.ROBOT).createProduct());
     }
 }

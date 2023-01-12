@@ -6,9 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductsRepository extends Database<String, Product> {
-
-    public void saveProduct(Product product){
-        super.save(product);
-    }
-
 }

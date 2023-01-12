@@ -1,5 +1,6 @@
 package de.tech26.robotfactory.model;
 
+import de.tech26.robotfactory.enums.ProductGroupEnum;
 import de.tech26.robotfactory.model.annotations.Id;
 
 import java.math.BigDecimal;
@@ -11,13 +12,15 @@ public class Product {
     private Long quantity;
     private String name;
     private String type;
+    private ProductGroupEnum productGroup;
 
-    public Product(String id, BigDecimal price, Long quantity, String name, String type) {
+    public Product(String id, BigDecimal price, Long quantity, String name, String type, ProductGroupEnum productGroup) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;
         this.name = name;
         this.type = type;
+        this.productGroup = productGroup;
     }
 
     public String getId() {
@@ -58,5 +61,13 @@ public class Product {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public ProductGroupEnum getProductGroup() {
+        return productGroup;
+    }
+
+    public void setProductGroup(ProductGroupEnum productGroup) {
+        this.productGroup = productGroup;
     }
 }

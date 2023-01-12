@@ -1,20 +1,27 @@
-package de.tech26.robotfactory.model;
+package de.tech26.robotfactory.dto.responses;
 
-import de.tech26.robotfactory.model.annotations.Id;
+import de.tech26.robotfactory.model.Order;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public class Order {
-    @Id
+public class GetOrderResponse {
     private String id;
     private List<String> productIds;
     private String customerId;
     private BigDecimal total;
     private Date orderedAt;
 
-    public Order(String id, List<String> productIds, String customerId, BigDecimal total, Date orderedAt) {
+    public GetOrderResponse(Order order) {
+        this.id = order.getId();
+        this.productIds = order.getProductIds();
+        this.customerId = order.getCustomerId();
+        this.total = order.getTotal();
+        this.orderedAt = order.getOrderedAt();
+    }
+
+    public GetOrderResponse(String id, List<String> productIds, String customerId, BigDecimal total, Date orderedAt) {
         this.id = id;
         this.productIds = productIds;
         this.customerId = customerId;

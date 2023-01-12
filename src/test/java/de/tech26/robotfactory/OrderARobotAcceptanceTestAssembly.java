@@ -19,7 +19,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test-endpoints.properties")
-public class OrderARobotAcceptanceTest {
+public class OrderARobotAcceptanceTestAssembly {
 
     @Value("${server.servlet.context-path}")
     private String contextPath;

@@ -7,9 +7,4 @@ import org.springframework.stereotype.Service;
 
 @Repository
 public class OrdersRepository extends Database<String, Order> {
-
-    public void saveOrder(Order order) {
-        super.save(order);
-    }
-
 }

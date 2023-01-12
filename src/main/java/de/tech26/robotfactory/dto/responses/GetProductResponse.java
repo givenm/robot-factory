@@ -11,6 +11,9 @@ public class GetProductResponse {
     private String name;
     private String type;
 
+    /**
+     * Could have used projections with spring data, if available
+     * **/
     public GetProductResponse(Product product) {
         this.id = product.getId();
         this.price = product.getPrice();
