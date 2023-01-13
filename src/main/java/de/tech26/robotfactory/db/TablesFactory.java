@@ -20,6 +20,7 @@ class TablesFactory {
     }
 
     public static <T, R> Map<R, T> getTable(@NotNull Class<T> clazz) {
+        //Could use strategy pattern here again but leaving it as tables are added by different process in prod.
         if (Order.class == clazz) {
             return (Map<R, T>) ORDERS_TABLE;
         } else if (Product.class == clazz) {

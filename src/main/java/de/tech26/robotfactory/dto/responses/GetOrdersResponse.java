@@ -9,6 +9,9 @@ public class GetOrdersResponse {
         this.orders = orders;
     }
 
+    public GetOrdersResponse() {
+    }
+
     public List<GetOrderResponse> getOrders() {
         return orders;
     }

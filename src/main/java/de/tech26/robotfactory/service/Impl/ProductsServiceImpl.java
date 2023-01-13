@@ -8,6 +8,7 @@ import de.tech26.robotfactory.model.Product;
 import de.tech26.robotfactory.repository.ProductsRepository;
 import de.tech26.robotfactory.service.ProductsService;
 import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;

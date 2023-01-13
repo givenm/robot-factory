@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.model.annotations;
+package de.tech26.robotfactory.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package de.tech26.robotfactory.dto.responses;
+
 import de.tech26.robotfactory.enums.ErrorCodesEnum;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;

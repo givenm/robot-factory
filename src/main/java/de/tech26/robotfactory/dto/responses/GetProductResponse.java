@@ -1,5 +1,6 @@
 package de.tech26.robotfactory.dto.responses;
 
+import de.tech26.robotfactory.enums.ProductGroupEnum;
 import de.tech26.robotfactory.model.Product;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ public class GetProductResponse {
     private Long quantity;
     private String name;
     private String type;
+    private ProductGroupEnum productGroup;
 
     /**
      * Could have used projections with spring data, if available
@@ -21,6 +23,10 @@ public class GetProductResponse {
         this.name = product.getName();
         this.name = product.getName();
         this.type = product.getType();
+        this.productGroup = product.getProductGroup();
+    }
+
+    public GetProductResponse() {
     }
 
     public String getId() {
@@ -61,5 +67,13 @@ public class GetProductResponse {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public ProductGroupEnum getProductGroup() {
+        return productGroup;
+    }
+
+    public void setProductGroup(ProductGroupEnum productGroup) {
+        this.productGroup = productGroup;
     }
 }

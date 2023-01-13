@@ -4,7 +4,6 @@ import de.tech26.robotfactory.enums.ProductGroupEnum;
 import de.tech26.robotfactory.enums.RobotPartType;
 import de.tech26.robotfactory.model.ProductBuilder;
 import de.tech26.robotfactory.repository.ProductsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,8 +13,11 @@ import java.math.BigDecimal;
 @SpringBootApplication
 public class RobotFactoryApplication implements CommandLineRunner {
 
-    @Autowired
-    private ProductsRepository productsRepository;
+    private final ProductsRepository productsRepository;
+
+    public RobotFactoryApplication(ProductsRepository productsRepository) {
+        this.productsRepository = productsRepository;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(RobotFactoryApplication.class, args);

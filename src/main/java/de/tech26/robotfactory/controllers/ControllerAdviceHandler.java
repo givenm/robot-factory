@@ -5,9 +5,9 @@
  */
 package de.tech26.robotfactory.controllers;
 
+import de.tech26.robotfactory.dto.responses.ApiErrorResponse;
 import de.tech26.robotfactory.enums.ErrorCodesEnum;
 import de.tech26.robotfactory.exceptions.GlobalRuntimeException;
-import de.tech26.robotfactory.dto.responses.ApiErrorResponse;
 import de.tech26.robotfactory.utils.RestUtil;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.LinkedList;

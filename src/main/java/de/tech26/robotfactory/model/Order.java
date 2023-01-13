@@ -1,6 +1,6 @@
 package de.tech26.robotfactory.model;
 
-import de.tech26.robotfactory.model.annotations.Id;
+import de.tech26.robotfactory.annotations.Id;
 
 import java.math.BigDecimal;
 import java.util.Date;

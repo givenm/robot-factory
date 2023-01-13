@@ -1,6 +1,7 @@
 package de.tech26.robotfactory.dto.requests;
 
 import de.tech26.robotfactory.enums.ProductGroupEnum;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
