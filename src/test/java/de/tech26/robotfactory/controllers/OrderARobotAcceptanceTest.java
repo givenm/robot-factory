@@ -6,7 +6,6 @@ import de.tech26.robotfactory.dto.responses.CreateOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetOrdersResponse;
 import io.restassured.RestAssured;
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
