@@ -1,5 +1,7 @@
 package de.tech26.robotfactory.db;
 
+import de.tech26.robotfactory.enums.ErrorCodesEnum;
+import de.tech26.robotfactory.exceptions.GlobalRuntimeException;
 import de.tech26.robotfactory.model.Order;
 import de.tech26.robotfactory.model.Product;
 
@@ -26,7 +28,7 @@ class TablesFactory {
         } else if (Product.class == clazz) {
             return (Map<R, T>) PRODUCTS_TABLE;
         }
-        throw new RuntimeException("The Table for entity prvided does not exist!");
+        throw new GlobalRuntimeException(ErrorCodesEnum.GENERAL_SERVER_ERROR, "The Table for entity provided does not exist!");
     }
 
 }

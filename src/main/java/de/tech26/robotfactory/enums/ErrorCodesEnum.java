@@ -9,7 +9,8 @@ public enum ErrorCodesEnum {
     ITEM_NOT_FOUND(3, "Item with provided query not found.", HttpStatus.NOT_FOUND),
     PRODUCT_OUT_OF_STOCK(5, "Product is out of stock. Please check again later.", HttpStatus.UNPROCESSABLE_ENTITY),
     MISSING_PRODUCT_PART(6, "An essential component is missing to fulfil the order.", HttpStatus.INTERNAL_SERVER_ERROR),
-    UNKNOWN_PRODUCT(7, "Please provide a valid product type.", HttpStatus.BAD_REQUEST);
+    UNKNOWN_PRODUCT(7, "Please provide a valid product type.", HttpStatus.BAD_REQUEST),
+    GENERAL_SERVER_ERROR(8, "An unexpected error occurred. Please try again.", HttpStatus.BAD_REQUEST);
     private static final String RESPONSE_CODE_FORMAT = "%04d"; //This will pad response code value with zeros up to length 4.
     private final String responseCode;
     private final Integer httpStatusCode;
@@ -19,7 +20,7 @@ public enum ErrorCodesEnum {
     /**
      * Creates the enum with responseCode and responseDesc.
      */
-    private ErrorCodesEnum(int responseCode, String responseMessage, HttpStatus httpStatus) {
+    ErrorCodesEnum(int responseCode, String responseMessage, HttpStatus httpStatus) {
         if (responseCode >= 0) {
             this.responseCode = String.format(RESPONSE_CODE_FORMAT, responseCode);
         } else {

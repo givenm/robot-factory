@@ -15,21 +15,6 @@ import java.util.List;
 import java.util.UUID;
 
 class RobotAssembly {
-    protected String orderId;
-    protected BigDecimal total;
-
-    private RobotAssembly(String orderId, BigDecimal total) {
-        this.orderId = orderId;
-        this.total = total;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public BigDecimal getTotal() {
-        return total;
-    }
 
     public static class Builder {
         private final String customerId;
@@ -84,27 +69,6 @@ class RobotAssembly {
             }
             throw new GlobalRuntimeException(ErrorCodesEnum.PRODUCT_OUT_OF_STOCK, String.format("%s component is missing to fulfil the order", productType));
         }
-
-        public Product getFace() {
-            return face;
-        }
-
-        public Product getArms() {
-            return arms;
-        }
-
-        public Product getMobility() {
-            return mobility;
-        }
-
-        public Product getMaterial() {
-            return material;
-        }
-
-        public String getCustomerId() {
-            return customerId;
-        }
-
 
     }
 }

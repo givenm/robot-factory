@@ -45,6 +45,9 @@ public class ApiErrorResponse {
         this.errorMessages = Collections.singletonList(errorCodesEnum.getResponseMessage());
     }
 
+    public ApiErrorResponse() {
+    }
+
     public List<String> getErrorMessages() {
         return errorMessages;
     }

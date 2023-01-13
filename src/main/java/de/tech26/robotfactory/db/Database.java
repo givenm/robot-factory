@@ -1,6 +1,8 @@
 package de.tech26.robotfactory.db;
 
 import de.tech26.robotfactory.annotations.Id;
+import de.tech26.robotfactory.enums.ErrorCodesEnum;
+import de.tech26.robotfactory.exceptions.GlobalRuntimeException;
 
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;
@@ -14,26 +16,30 @@ public abstract class Database<R, T> {
     public void save(@NotNull T entity) {
         assert entity != null;
         Field foundIdField = getIdField(entity);
-        foundIdField.setAccessible(true);
+
+        Object value = null;
         try {
-            Object value = foundIdField.get(entity);
+            foundIdField.setAccessible(true);
+            value = foundIdField.get(entity);
             foundIdField.setAccessible(false);
-            if (value == null) {
-                throw new RuntimeException("Id of an entity must not be null");
-            }
-            Map<R, T> table = (Map<R, T>) TablesFactory.getTable(entity.getClass());
-            assert table != null;
-            table.put((R) value, entity);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new GlobalRuntimeException(ErrorCodesEnum.GENERAL_SERVER_ERROR, e.getMessage());
         }
+
+        if (value == null) {
+            throw new GlobalRuntimeException(ErrorCodesEnum.GENERAL_SERVER_ERROR, "Value of the entity id marked with @Id must not be null");
+        }
+        Map<R, T> table = (Map<R, T>) TablesFactory.getTable(entity.getClass());
+        assert table != null;
+        table.put((R) value, entity);
+
     }
 
     private static <T> Field getIdField(T entity) {
         return Arrays.stream(entity.getClass().getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(Id.class))
                 .findAny()
-                .orElseThrow(() -> new RuntimeException("Please specify an id annotation in the model entity"));
+                .orElseThrow(() -> new GlobalRuntimeException(ErrorCodesEnum.GENERAL_SERVER_ERROR, "Please specify an id annotation in the model entity"));
     }
 
     public Optional<T> findById(@NotNull String id, @NotNull Class<T> clazz) {

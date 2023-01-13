@@ -10,6 +10,8 @@ public class CreateOrderRequest {
 
     @NotNull(message = "Please provide product type for your order")
     private ProductGroupEnum productType;
+
+    @NotNull(message = "Please provide components for your order")
     @Size(min = 1, message = "Your order must have a minimum of 1 component")
     private List<String> components;
 

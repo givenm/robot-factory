@@ -1,7 +1,7 @@
 package de.tech26.robotfactory.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import de.tech26.robotfactory.dto.responses.ApiErrorResponse;
 import de.tech26.robotfactory.dto.responses.CreateOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetOrdersResponse;
@@ -9,7 +9,6 @@ import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import java.math.BigDecimal;
@@ -22,9 +21,6 @@ import static org.hamcrest.core.IsNull.notNullValue;
 
 
 public class OrderARobotAcceptanceTest extends ControllerTest {
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setup() {
@@ -48,6 +44,42 @@ public class OrderARobotAcceptanceTest extends ControllerTest {
     }
 
     @Test
+    public void should_return_http_400_when_robot_request_properties_invalid() {
+        ApiErrorResponse errorResponse = postRequest("/orders",
+                "" +
+                        "   { " +
+                        "   }"
+        )
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .extract()
+                .as(ApiErrorResponse.class);
+
+        assertThat(errorResponse.getErrorMessages())
+                .contains("productType: Please provide product type for your order", "components: Please provide components for your order");
+        assertThat(errorResponse.getResponse().getCode()).isEqualTo("0001");
+        assertThat(errorResponse.getResponse().getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void should_return_http_400_when_robot_components_array_is_empty() {
+        ApiErrorResponse errorResponse = postRequest("/orders",
+                "" +
+                        "   { " +
+                        "      \"productType\":\"ROBOT\", " +
+                        "      \"components\": [] " +
+                        "   }"
+        )
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .extract()
+                .as(ApiErrorResponse.class);
+
+        assertThat(errorResponse.getErrorMessages())
+                .contains("components: Your order must have a minimum of 1 component");
+    }
+
+    @Test
     public void should_new_robot_on_find_all_robot_orders() throws JsonProcessingException {
         postRequest("/orders",
                 "" +
@@ -56,10 +88,11 @@ public class OrderARobotAcceptanceTest extends ControllerTest {
                         "      \"components\": [\"I\",\"A\",\"E\",\"G\"] " +
                         "   }"
         );
-        ValidatableResponse res = getRequest("/orders")
+        GetOrdersResponse ordersResponse = getRequest("/orders")
                 .assertThat()
-                .statusCode(HttpStatus.OK.value());
-        GetOrdersResponse ordersResponse = objectMapper.readValue(res.extract().asString(), GetOrdersResponse.class);
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(GetOrdersResponse.class);
         assertThat(ordersResponse.getOrders()).hasAtLeastOneElementOfType(GetOrderResponse.class);
         assertThat(ordersResponse.getOrders().stream().anyMatch(order -> {
             return order.getProductIds().containsAll(Arrays.asList("I", "A", "E", "G")) &&
@@ -73,7 +106,7 @@ public class OrderARobotAcceptanceTest extends ControllerTest {
 
     @Test
     public void should_find_a_robot_order_by_id() throws JsonProcessingException {
-        ValidatableResponse responseWithId = postRequest("/orders",
+        CreateOrderResponse newOrderResponse = postRequest("/orders",
                 "" +
                         "   { " +
                         "      \"productType\":\"ROBOT\", " +
@@ -81,10 +114,11 @@ public class OrderARobotAcceptanceTest extends ControllerTest {
                         "   }"
         )
                 .assertThat()
-                .statusCode(HttpStatus.CREATED.value());
-        CreateOrderResponse newOrderResponse = objectMapper.readValue(responseWithId.extract().asString(), CreateOrderResponse.class);
+                .statusCode(HttpStatus.CREATED.value())
+                .extract()
+                .as(CreateOrderResponse.class);
 
-        ValidatableResponse res = getRequest("/orders/" + newOrderResponse.getOrderId())
+        getRequest("/orders/" + newOrderResponse.getOrderId())
                 .assertThat()
                 .statusCode(HttpStatus.OK.value())
                 .body("id", equalTo(newOrderResponse.getOrderId()))
