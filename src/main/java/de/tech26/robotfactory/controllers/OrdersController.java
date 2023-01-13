@@ -4,7 +4,7 @@ import de.tech26.robotfactory.dto.requests.CreateOrderRequest;
 import de.tech26.robotfactory.dto.responses.CreateOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetOrderResponse;
 import de.tech26.robotfactory.dto.responses.GetOrdersResponse;
-import de.tech26.robotfactory.service.OrdersService;
+import de.tech26.robotfactory.services.OrdersService;
 import de.tech26.robotfactory.utils.RestUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,7 +35,7 @@ public class OrdersController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GetOrderResponse> getOrderById(@Valid @NotEmpty @PathVariable String id) {
-        return RestUtil.toResponseEntity(ordersService.getProduct(id), HttpStatus.OK);
+        return RestUtil.toResponseEntity(ordersService.getOrder(id), HttpStatus.OK);
     }
 
     @GetMapping

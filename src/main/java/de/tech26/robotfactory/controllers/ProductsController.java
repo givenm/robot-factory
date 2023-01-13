@@ -2,7 +2,7 @@ package de.tech26.robotfactory.controllers;
 
 import de.tech26.robotfactory.dto.responses.GetProductResponse;
 import de.tech26.robotfactory.dto.responses.GetProductsResponse;
-import de.tech26.robotfactory.service.ProductsService;
+import de.tech26.robotfactory.services.ProductsService;
 import de.tech26.robotfactory.utils.RestUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

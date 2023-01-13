@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.service.Impl;
+package de.tech26.robotfactory.services.Impl;
 
 import de.tech26.robotfactory.dto.AssembledOrder;
 import de.tech26.robotfactory.dto.requests.CreateOrderRequest;
@@ -12,7 +12,7 @@ import de.tech26.robotfactory.model.Product;
 import de.tech26.robotfactory.ordersassembly.OrderStrategyFactory;
 import de.tech26.robotfactory.repository.OrdersRepository;
 import de.tech26.robotfactory.repository.ProductsRepository;
-import de.tech26.robotfactory.service.OrdersService;
+import de.tech26.robotfactory.services.OrdersService;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -33,14 +33,14 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest, String customerId) {
-        //With the strategy pattern used and when we add a new product, we don't have to update anything here
+        //With the strategy pattern used and when we add a differed product to robot, we don't have to update anything here.
         //We just create a new implementation of fulfilling the order by just creating a new concrete class
         //that extends OrderStrategy and has its own implementation like done in RobotOrderStrategy.
         //This will work well if the API will not change much or get blotted with optional variables to accommodate many kinds of products assembly different to robots.
         AssembledOrder assembledOrder = orderStrategyFactory
                 .findOrderStrategy(createOrderRequest.getProductType())
                 .orElseThrow(() -> new GlobalRuntimeException(ErrorCodesEnum.UNKNOWN_PRODUCT))
-                .createOrder(createOrderRequest, customerId);
+                .executeOrder(createOrderRequest, customerId);
         saveOrderAndUpdateStock(assembledOrder.getOrder(), assembledOrder.getProductsUsed());
         //Asynchronously send email to customer for the successful order. Could be delegated to emails microservice
         return new CreateOrderResponse(assembledOrder.getOrder().getId(), assembledOrder.getOrder().getTotal());
@@ -58,7 +58,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public GetOrderResponse getProduct(String id) {
+    public GetOrderResponse getOrder(String id) {
         return ordersRepository.findById(id, Order.class)
                 .map(GetOrderResponse::new)
                 .orElseThrow(() -> new GlobalRuntimeException(ErrorCodesEnum.ITEM_NOT_FOUND));

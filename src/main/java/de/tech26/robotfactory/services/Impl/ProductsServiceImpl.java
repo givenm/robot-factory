@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.service.Impl;
+package de.tech26.robotfactory.services.Impl;
 
 import de.tech26.robotfactory.dto.responses.GetProductResponse;
 import de.tech26.robotfactory.dto.responses.GetProductsResponse;
@@ -6,7 +6,7 @@ import de.tech26.robotfactory.enums.ErrorCodesEnum;
 import de.tech26.robotfactory.exceptions.GlobalRuntimeException;
 import de.tech26.robotfactory.model.Product;
 import de.tech26.robotfactory.repository.ProductsRepository;
-import de.tech26.robotfactory.service.ProductsService;
+import de.tech26.robotfactory.services.ProductsService;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;

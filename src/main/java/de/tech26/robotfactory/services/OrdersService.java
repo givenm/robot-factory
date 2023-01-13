@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.service;
+package de.tech26.robotfactory.services;
 
 import de.tech26.robotfactory.dto.requests.CreateOrderRequest;
 import de.tech26.robotfactory.dto.responses.CreateOrderResponse;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public interface OrdersService {
     CreateOrderResponse createOrder(@NotNull CreateOrderRequest  createOrderRequest, @NotNull String customerId);
 
-    GetOrderResponse getProduct(String id);
+    GetOrderResponse getOrder(String id);
 
     GetOrdersResponse getAllOrders();
 }

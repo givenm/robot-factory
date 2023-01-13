@@ -26,7 +26,7 @@ class RobotOrderStrategy implements OrderStrategy {
     }
 
     @Override
-    public AssembledOrder createOrder(CreateOrderRequest createOrderRequest, String customerId) {
+    public AssembledOrder executeOrder(CreateOrderRequest createOrderRequest, String customerId) {
         //1. Query with specific product Ids against external DB is a must. findAll for demonstration only
         //2. We can utilize transactions with select for update to lock the products when reading to make sure that stock
         // is represented accurately but create order process should have a very short timeout.

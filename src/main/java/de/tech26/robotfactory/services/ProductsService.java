@@ -1,4 +1,4 @@
-package de.tech26.robotfactory.service;
+package de.tech26.robotfactory.services;
 
 import de.tech26.robotfactory.dto.responses.GetProductResponse;
 import de.tech26.robotfactory.dto.responses.GetProductsResponse;
